@@ -24,13 +24,13 @@ func main() {
                 result float64
         )
 
-        fmt.Print("first operand: ")
+        fmt.Print("please enter the first operand: ")
         scan_operand(&operand_1)
 
-        fmt.Print("second operand: ")
+        fmt.Print("please enter the second operand: ")
         scan_operand(&operand_2)
 
-        fmt.Print("operator ('+', '-', '*' or '/' sign): ")
+        fmt.Print("please enter the operator ('+', '-', '*' or '/' sign): ")
         
         for {
                 fmt.Scan(&operator)
@@ -45,7 +45,16 @@ func main() {
                 case "*":
                         result = operand_1 * operand_2
                 case "/":
-                        result = operand_1 / operand_2
+			if operand_2 == 0 {
+				fmt.Print("division by zero is forbidden, " +
+				          "please enter another second operand: ")
+				scan_operand(&operand_2)
+				fmt.Print("please reenter the operator " +
+					  "('+', '-', '*' or '/' sign): ")
+				stop = false
+			} else {
+				result = operand_1 / operand_2
+			}
                 default:
                         fmt.Print("nope, please try another operator sign. " +
                                   "remember, only '+', '-', '*' and '/' are " +
