@@ -2,9 +2,11 @@ package main
 
 import "fmt"
 
-func scanOperand(operandPtr *float64) {
+func scanOperand() float64 {
+        var scannedOperand float64
+
         for {
-                _, err := fmt.Scan(operandPtr)
+                _, err := fmt.Scan(&scannedOperand)
 
                 if err == nil {
                         break
@@ -14,6 +16,8 @@ func scanOperand(operandPtr *float64) {
                         fmt.Print("nope, please enter a real number: ")
                 }
         }
+
+        return scannedOperand
 }
 
 func main() {
@@ -25,10 +29,10 @@ func main() {
         )
 
         fmt.Print("please enter the first operand: ")
-        scanOperand(&operand1)
+        operand1 = scanOperand()
 
         fmt.Print("please enter the second operand: ")
-        scanOperand(&operand2)
+        operand2 = scanOperand()
 
         fmt.Print("please enter the operator ('+', '-', '*' or '/' sign): ")
         
@@ -48,7 +52,7 @@ func main() {
                         if operand2 == 0 {
                                 fmt.Print("division by zero is forbidden, " +
                                           "please enter another second operand: ")
-                                scanOperand(&operand2)
+                                operand2 = scanOperand()
                                 fmt.Print("please reenter the operator " +
                                           "('+', '-', '*' or '/' sign): ")
                                 stop = false
