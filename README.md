@@ -1,3 +1,5 @@
+### **Please note that all the Go code in this repo is located in multiple non-main branches (`TASK-1`, `TASK-2-1` etc., according to the number of task each piece of code is related to)**
+
 # RULES
 
 ## Общие правила
