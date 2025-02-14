@@ -2,15 +2,15 @@ package main
 
 import "fmt"
 
-func scan_operand(operand_ptr *float64) {
+func scanOperand(operandPtr *float64) {
         for {
-                _, err := fmt.Scan(operand_ptr)
+                _, err := fmt.Scan(operandPtr)
 
                 if err == nil {
                         break
                 } else {
-                        var flush_str string = "default"
-                        for n_flushed := 1; n_flushed != 0; n_flushed, _ = fmt.Scanln(&flush_str) {}
+                        var flushStr string = "default"
+                        for nFlushed := 1; nFlushed != 0; nFlushed, _ = fmt.Scanln(&flushStr) {}
                         fmt.Print("nope, please enter a real number: ")
                 }
         }
@@ -18,17 +18,17 @@ func scan_operand(operand_ptr *float64) {
 
 func main() {
         var (
-                operand_1 float64
-                operand_2 float64
+                operand1 float64
+                operand2 float64
                 operator string
                 result float64
         )
 
         fmt.Print("please enter the first operand: ")
-        scan_operand(&operand_1)
+        scanOperand(&operand1)
 
         fmt.Print("please enter the second operand: ")
-        scan_operand(&operand_2)
+        scanOperand(&operand2)
 
         fmt.Print("please enter the operator ('+', '-', '*' or '/' sign): ")
         
@@ -39,21 +39,21 @@ func main() {
 
                 switch operator {
                 case "+":
-                        result = operand_1 + operand_2
+                        result = operand1 + operand2
                 case "-":
-                        result = operand_1 - operand_2
+                        result = operand1 - operand2
                 case "*":
-                        result = operand_1 * operand_2
+                        result = operand1 * operand2
                 case "/":
-                        if operand_2 == 0 {
+                        if operand2 == 0 {
                                 fmt.Print("division by zero is forbidden, " +
                                           "please enter another second operand: ")
-                                scan_operand(&operand_2)
+                                scanOperand(&operand2)
                                 fmt.Print("please reenter the operator " +
                                           "('+', '-', '*' or '/' sign): ")
                                 stop = false
                         } else {
-                                result = operand_1 / operand_2
+                                result = operand1 / operand2
                         }
                 default:
                         fmt.Print("nope, please try another operator sign. " +
