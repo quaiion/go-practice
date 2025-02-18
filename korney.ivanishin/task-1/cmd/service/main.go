@@ -21,26 +21,27 @@ func scanOperand() float64 {
 }
 
 func main() {
-        var (
-                operand1 float64
-                operand2 float64
-                operator string
-                result float64
-        )
-
         fmt.Print("please enter the first operand: ")
-        operand1 = scanOperand()
+        operand1 := scanOperand()
 
         fmt.Print("please enter the second operand: ")
-        operand2 = scanOperand()
+        operand2 := scanOperand()
 
         fmt.Print("please enter the operator ('+', '-', '*' or '/' sign): ")
         
         for {
-                fmt.Scan(&operator)
-
-                var stop bool = true
-
+		var operator string
+                _, err := fmt.Scan(&operator)
+		if err != nil {
+			fmt.Println(err)
+			break
+		}
+		
+                var (
+			stop bool = true
+			result float64
+		)
+		
                 switch operator {
                 case "+":
                         result = operand1 + operand2
@@ -67,9 +68,8 @@ func main() {
                 }
                 
                 if stop {
+			fmt.Printf("result: %.3f\n", result)
                         break
                 }
         }
-
-        fmt.Printf("result: %.3f\n", result)
 }
