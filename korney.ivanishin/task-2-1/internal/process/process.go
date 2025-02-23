@@ -3,6 +3,7 @@ package process
 import (
 	"fmt"
 	"errors"
+	"github.com/conditioners/internal/stream_utils"
 )
 
 func getRequest() (int32, bool, error) {
@@ -12,7 +13,7 @@ func getRequest() (int32, bool, error) {
 		boundReq int32
 	)
 	
-	_, err := fmt.Scan(&boundReqTypeSymb, &boundReq)
+	boundReqTypeSymb, boundReq, err := stream_utils.ScanBoundReq()
 	if err != nil {
 		return 0, false, err
 	}
@@ -23,16 +24,17 @@ func getRequest() (int32, bool, error) {
 	case `<=`:
 		isLowerBoundReq = false
 	default:
-		err = errors.New("please use only '>=' and '<=' signs")
+		return 0, false, errors.New("please use only '>='" +
+					    "' and '<=' signs")
 	}
 
 	return boundReq, isLowerBoundReq, err
 }
 
 func getNewBounds(lowerBound int32, upperBound int32, boundReq int32,
-	          isLowerBoundReq bool) (int32, int32, error) {
+	          isLowerBoundReq bool) (int32, int32) {
 	if lowerBound == -1 {
-		return lowerBound, upperBound, nil
+		return lowerBound, upperBound
 	}
 
         if isLowerBoundReq {
@@ -53,54 +55,54 @@ func getNewBounds(lowerBound int32, upperBound int32, boundReq int32,
                 }
         }
 
-        return lowerBound, upperBound, nil
+        return lowerBound, upperBound
 }
 
 func processDepartment() error {
         var (
-                nEmps uint32
                 lowerBound int32 = 15
                 upperBound int32 = 30
         )
 
-        _, err := fmt.Scan(&nEmps)
+        nEmps, err := stream_utils.ScanInt32()
 	if err != nil {
 		return err
 	}
 
-        var i uint32
+        var i int32
         for i = 0 ; i < nEmps ; i += 1 {
 		boundRec, isLowerBoundReq, err := getRequest()
 		if err != nil {
-			break
+			return err
 		}
 
-                lowerBound, upperBound, err = getNewBounds(lowerBound,
-							   upperBound,
-							   boundRec,
-							   isLowerBoundReq)
+                lowerBound, upperBound = getNewBounds(lowerBound,
+						      upperBound,
+						      boundRec,
+						      isLowerBoundReq)
 		if err != nil {
-			break
+			return err
 		}
 
                 fmt.Println(lowerBound)
         }
 
-        return err
+        return nil
 }
 
 func ProcessOffice() error {
-        var nDeps uint32
-
-        _, err := fmt.Scan(&nDeps)
+        nDeps, err := stream_utils.ScanInt32()
         if err != nil {
                 return err
         }
 
-        var i uint32
+        var i int32
         for i = 0 ; i < nDeps ; i += 1 {
                 err = processDepartment()
+		if err != nil {
+			return err
+		}
         }
 
-        return err
+        return nil
 }
