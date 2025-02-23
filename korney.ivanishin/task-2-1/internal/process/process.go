@@ -39,7 +39,7 @@ func getNewBounds(lowerBound int32, upperBound int32, boundReq int32,
 
         if isLowerBoundReq {
                 if boundReq > lowerBound {
-                        if boundReq < upperBound {
+                        if boundReq <= upperBound {
                                 lowerBound = boundReq
                         } else {
                                 lowerBound = -1
@@ -47,7 +47,7 @@ func getNewBounds(lowerBound int32, upperBound int32, boundReq int32,
                 }
         } else {
                 if boundReq < upperBound {
-                        if boundReq > lowerBound {
+                        if boundReq >= lowerBound {
                                 upperBound = boundReq
                         } else {
                                 lowerBound = -1
