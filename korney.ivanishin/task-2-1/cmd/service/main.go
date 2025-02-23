@@ -2,8 +2,8 @@ package main
 
 import (
         "fmt"
-        "internal/stream_utils"
-        "internal/process"
+        "conditioners/internal/stream_utils"
+        "conditioners/internal/process"
 )
 
 func main() {
