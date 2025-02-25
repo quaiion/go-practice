@@ -50,7 +50,7 @@ func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32,
 	if dishHeap == nil {
 		return 0, errDataCorrupted
 	}
-	if designPos > dishHeap.Len() {
+	if designPos > uint32(dishHeap.Len()) {
 		return 0, errDesignPosOOR
 	}
 
