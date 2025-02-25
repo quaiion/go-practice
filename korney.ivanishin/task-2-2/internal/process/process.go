@@ -7,7 +7,10 @@ import (
 	"github.com/cafe/internal/streamUtils"
 )
 
-var errDataCorrupted = errors.New("internal data corrupted")
+var (
+	errDataCorrupted = errors.New("internal data corrupted")
+	errFailedNumConv = errors.New("number conversion error")
+)
 
 func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
 	dishHeap := new(intMaxHeapIF.IntMaxHeap)
@@ -49,7 +52,10 @@ func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32,
 
 	var designScore int32 = 0
 	for i := uint32(0) ; i < designPos ; i += 1 {
-		designScore = heap.Pop(dishHeap).(int32)
+		designScore, ok := heap.Pop(dishHeap).(int32)
+		if !ok {
+			return 0, errFailedNumConv
+		}
 	}
 
 	return designScore, nil
