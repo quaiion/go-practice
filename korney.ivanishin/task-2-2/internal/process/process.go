@@ -54,9 +54,12 @@ func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32,
 		return 0, errDesignPosOOR
 	}
 
-	var designScore int32 = 0
+	var (
+		designScore int32 = 0
+		ok bool
+	)
 	for i := uint32(0) ; i < designPos ; i += 1 {
-		designScore, ok := heap.Pop(dishHeap).(int32)
+		designScore, ok = heap.Pop(dishHeap).(int32)
 		if !ok {
 			return 0, errFailedNumConv
 		}
