@@ -10,6 +10,7 @@ import (
 var (
 	errDataCorrupted = errors.New("internal data corrupted")
 	errFailedNumConv = errors.New("number conversion error")
+	errDesignPosOOR  = errors.New("designated position out of range")
 )
 
 func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
@@ -48,6 +49,9 @@ func ScanDesignPos() (uint32, error) {
 func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32, error) {
 	if dishHeap == nil {
 		return 0, errDataCorrupted
+	}
+	if designPos > dishHeap.Len() {
+		return 0, errDesignPosOOR
 	}
 
 	var designScore int32 = 0
