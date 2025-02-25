@@ -47,8 +47,6 @@ func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32,
 		return 0, errDataCorrupted
 	}
 
-	// designScore := heap.Remove(dishHeap, int(designPos)).(int32)
-
 	var designScore int32 = 0
 	for i := uint32(0) ; i < designPos ; i += 1 {
 		designScore = heap.Pop(dishHeap).(int32)
