@@ -1,0 +1,60 @@
+package process
+
+import (
+	"errors"
+	"container/heap"
+	"github.com/cafe/internal/intMaxHeapIF"
+	"github.com/cafe/internal/streamUtils"
+)
+
+func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
+	dishHeap := new(intMaxHeapIF.IntMaxHeap)
+	if dishHeap == nil {
+		return nil, errors.New("failed to allocate memory " +
+				       "for an internal data storage")
+	}
+
+	heap.Init(dishHeap)
+	return dishHeap, nil
+}
+
+func ScanDishHeap(dishHeap *intMaxHeapIF.IntMaxHeap) error {
+	if dishHeap == nil {
+		return errors.New("internal data storage corrupted")
+	}
+
+	nDishes, err := streamUtils.ScanUInt32()
+	if err != nil {
+		return err
+	}
+
+	for i := uint32(0) ; i < nDishes ; i += 1 {
+		score, err := streamUtils.ScanInt32()
+		if err != nil {
+			return err
+		}
+
+		heap.Push(dishHeap, score)
+	}
+
+	return nil
+}
+
+func ScanDesignPos() (uint32, error) {
+	return streamUtils.ScanUInt32()
+}
+
+func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32, error) {
+	if dishHeap == nil {
+		return 0, errors.New("internal data storage corrupted")
+	}
+
+	// designScore := heap.Remove(dishHeap, int(designPos)).(int32)
+
+	var designScore int32 = 0
+	for i := uint32(0) ; i < designPos ; i += 1 {
+		designScore = heap.Pop(dishHeap).(int32)
+	}
+
+	return designScore, nil
+}
