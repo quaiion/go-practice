@@ -9,10 +9,6 @@ import (
 
 func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
 	dishHeap := new(intMaxHeapIF.IntMaxHeap)
-	if dishHeap == nil {
-		return nil, errors.New("failed to allocate memory " +
-				       "for an internal data storage")
-	}
 
 	heap.Init(dishHeap)
 	return dishHeap, nil
