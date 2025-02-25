@@ -64,13 +64,12 @@ func processDepartment() error {
                 upperBound int32 = 30
         )
 
-        nEmps, err := stream_utils.ScanInt32()
+        nEmps, err := stream_utils.ScanUInt32()
 	if err != nil {
 		return err
 	}
 
-        var i int32
-        for i = 0 ; i < nEmps ; i += 1 {
+        for i := uint32(0) ; i < nEmps ; i += 1 {
 		boundRec, isLowerBoundReq, err := getRequest()
 		if err != nil {
 			return err
@@ -91,13 +90,12 @@ func processDepartment() error {
 }
 
 func ProcessOffice() error {
-        nDeps, err := stream_utils.ScanInt32()
+        nDeps, err := stream_utils.ScanUInt32()
         if err != nil {
                 return err
         }
 
-        var i int32
-        for i = 0 ; i < nDeps ; i += 1 {
+        for i := uint32(0) ; i < nDeps ; i += 1 {
                 err = processDepartment()
 		if err != nil {
 			return err
