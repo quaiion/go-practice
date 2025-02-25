@@ -1,4 +1,4 @@
-package stream_utils
+package streamUtils
 
 import "fmt"
 

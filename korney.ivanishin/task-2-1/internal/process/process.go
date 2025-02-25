@@ -3,7 +3,7 @@ package process
 import (
 	"fmt"
 	"errors"
-	"github.com/conditioners/internal/stream_utils"
+	"github.com/conditioners/internal/streamUtils"
 )
 
 func getRequest() (int32, bool, error) {
@@ -13,7 +13,7 @@ func getRequest() (int32, bool, error) {
 		boundReq int32
 	)
 	
-	boundReqTypeSymb, boundReq, err := stream_utils.ScanBoundReq()
+	boundReqTypeSymb, boundReq, err := streamUtils.ScanBoundReq()
 	if err != nil {
 		return 0, false, err
 	}
@@ -64,7 +64,7 @@ func processDepartment() error {
                 upperBound int32 = 30
         )
 
-        nEmps, err := stream_utils.ScanUInt32()
+        nEmps, err := streamUtils.ScanUInt32()
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func processDepartment() error {
 }
 
 func ProcessOffice() error {
-        nDeps, err := stream_utils.ScanUInt32()
+        nDeps, err := streamUtils.ScanUInt32()
         if err != nil {
                 return err
         }
