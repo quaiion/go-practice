@@ -7,6 +7,8 @@ import (
 	"github.com/cafe/internal/streamUtils"
 )
 
+var errDataCorrupted = errors.New("internal data corrupted")
+
 func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
 	dishHeap := new(intMaxHeapIF.IntMaxHeap)
 
@@ -16,7 +18,7 @@ func NewDishHeap() (*intMaxHeapIF.IntMaxHeap, error) {
 
 func ScanDishHeap(dishHeap *intMaxHeapIF.IntMaxHeap) error {
 	if dishHeap == nil {
-		return errors.New("internal data storage corrupted")
+		return errDataCorrupted
 	}
 
 	nDishes, err := streamUtils.ScanUInt32()
@@ -42,7 +44,7 @@ func ScanDesignPos() (uint32, error) {
 
 func GetDesignScore(dishHeap *intMaxHeapIF.IntMaxHeap, designPos uint32) (int32, error) {
 	if dishHeap == nil {
-		return 0, errors.New("internal data storage corrupted")
+		return 0, errDataCorrupted
 	}
 
 	// designScore := heap.Remove(dishHeap, int(designPos)).(int32)
