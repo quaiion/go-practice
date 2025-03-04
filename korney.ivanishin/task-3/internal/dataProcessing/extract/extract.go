@@ -21,6 +21,7 @@ func ExtractXmlData(inFilePath string) (currency.CurrencyList, error) {
                 return nil, fmt.Errorf("failed opening input file // %w",
                                        err)
         }
+        defer inFile.Close()
 
         decoder, err := createXmlDecoder(inFile)
         if err != nil {
@@ -37,7 +38,7 @@ func ExtractXmlData(inFilePath string) (currency.CurrencyList, error) {
         return data, nil
 }
 
-func openInFile(inFilePath string) (io.Reader, error) {
+func openInFile(inFilePath string) (*os.File, error) {
         inFile, err := os.Open(inFilePath)
         if err != nil {
                 var pathErr *fs.PathError
