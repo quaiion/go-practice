@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/cafe/internal/process"
-	"github.com/cafe/internal/streamUtils"
+	"github.com/quaiion/go-practice/cafe/internal/process"
+	"github.com/quaiion/go-practice/cafe/internal/streamUtils"
 )
 
 func main() {

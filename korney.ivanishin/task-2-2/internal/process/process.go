@@ -3,8 +3,8 @@ package process
 import (
 	"errors"
 	"container/heap"
-	"github.com/cafe/internal/intMaxHeapIF"
-	"github.com/cafe/internal/streamUtils"
+	"github.com/quaiion/go-practice/cafe/internal/intMaxHeapIF"
+	"github.com/quaiion/go-practice/cafe/internal/streamUtils"
 )
 
 var (
