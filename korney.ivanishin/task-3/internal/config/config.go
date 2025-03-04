@@ -1,36 +1,52 @@
 package config
 
 import (
-        "github.com/quaiion/go-practice/convertation/internal/misc"
-        "github.com/go-playground/validator/v10"
-        "path/filepath"
-        "flag"
-        "os"
-        "io/fs"
-        "gopkg.in/yaml.v3"
+	"errors"
+	"flag"
+	"fmt"
+	"io/fs"
+	"os"
+
+	"github.com/go-playground/validator/v10"
+	"gopkg.in/yaml.v3"
 )
 
 func GetIOFilePaths() (string, string, error) {
         confFilePath, isDefaultPath := parseConfFilePathFlag()
 
-        confFileContents, err := misc.ReadInFile(confFilePath)
+        confFileContents, err := readInFile(confFilePath)
         if err != nil {
                 if isDefaultPath {
-                        return ``, ``, errors.Errorf("failed reading (default) config file data // %w",
-                                                     err)
+                        return ``, ``, fmt.Errorf("failed reading (default) config file data // %w",
+                                                  err)
                 } else {
-                        return ``, ``, errors.Errorf("failed reading config file data // %w",
-                                                     err)
+                        return ``, ``, fmt.Errorf("failed reading config file data // %w",
+                                                  err)
                 }
         }
 
         inFilePath, outFilePath, err := decodeConfFileData(confFileContents)
         if err != nil {
-                return ``. ``, errors.Errorf("failed processing config file data // %w",
-                                             err)
+                return ``, ``, fmt.Errorf("failed processing config file data // %w",
+                                          err)
         }
 
         return inFilePath, outFilePath, nil
+}
+
+func readInFile(filePath string) ([]byte, error) {
+        fileData, err := os.ReadFile(filePath)
+        if err != nil {
+                var pathErr *fs.PathError
+                if errors.As(err, &pathErr) {
+                        err = fmt.Errorf("failed to open config file path: %s",
+                                         pathErr.Path)
+                }
+
+                return nil, err
+        }
+
+        return fileData, nil
 }
 
 func parseConfFilePathFlag() (string, bool) {
@@ -59,13 +75,13 @@ func decodeConfFileData(confFileContents []byte) (string, string, error) {
 
         err := yaml.Unmarshal(confFileContents, &parsed)
         if err != nil {
-                return ``, ``, errors.Errorf("failed unmarshalling // %w", err)
+                return ``, ``, fmt.Errorf("failed unmarshalling // %w", err)
         }
 
-        err = validate.Struct(parsed)
+        err = validator.New().Struct(parsed)
         if err != nil {
-                return ``, ``, errors.Errorf("decoded data validation failed // %w",
-                                             err)
+                return ``, ``, fmt.Errorf("decoded data validation failed // %w",
+                                          err)
         }
 
         return parsed.inFile, parsed.outFile, nil

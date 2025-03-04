@@ -1,32 +1,33 @@
 package encase
 
 import (
-        "github.com/quaiion/go-practice/convertation/internal/dataProcessing/currency"
-        "encoding/json"
-        "errors"
-        "sort"
-        "os"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+
+	"github.com/quaiion/go-practice/convertation/internal/dataProcessing/currency"
 )
 
 func EncaseJsonData(outFilePath string, currList currency.CurrencyList) error {
         err := prepareOutputEnv(outFilePath)
         if err != nil {
-                return errors.Errorf("failed preparing the output environment // %w",
-                                     err)
+                return fmt.Errorf("failed preparing the output environment // %w",
+                                  err)
         }
 
         currList = transformData(currList)
-        
-        data, err := json.MarshalIdent(currList, ``, ` `)
+
+        data, err := json.MarshalIndent(currList, ``, ` `)
         if err != nil {
-                return errors.Errorf("failed encoding (marshalling) output data // %w",
-                                     err)
+                return fmt.Errorf("failed encoding (marshalling) output data // %w",
+                                  err)
         }
 
-        err = writeJsonData(data)
+        err = writeJsonData(data, outFilePath)
         if err != nil {
-                return errors.Errorf("failed writing output json data // %w",
-                                     err)
+                return fmt.Errorf("failed writing output json data // %w",
+                                  err)
         }
 
         return nil
@@ -36,8 +37,8 @@ func EncaseJsonData(outFilePath string, currList currency.CurrencyList) error {
 func prepareOutputEnv(filePath string) error {
         err := os.MkdirAll(filepath.Dir(filePath), 0644)
         if err != nil {
-                return nil, errors.Errorf("failed to create specified directories // %w",
-                                          err)
+                return fmt.Errorf("failed to create specified directories // %w",
+                                  err)
         }
 
         return nil
@@ -50,10 +51,12 @@ func transformData(currList currency.CurrencyList) currency.CurrencyList {
 }
 
 /** separate function just for flexibility */
-func writeJsonData(currList currency.CurrencyList) error {
-        err = os.WriteFile(outFilePath, data, 0644)
+func writeJsonData(data []byte, outFilePath string) error {
+        err := os.WriteFile(outFilePath, data, 0644)
         if err != nil {
-                return errors.Errorf("failed writing output data to the file // %w",
-                                     err)
+                return fmt.Errorf("failed writing output data to the file // %w",
+                                  err)
         }
+
+        return nil
 }
