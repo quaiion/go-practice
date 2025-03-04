@@ -3,7 +3,7 @@ package process
 import (
 	"fmt"
 	"errors"
-	"github.com/conditioners/internal/streamUtils"
+	"github.com/quaiion/go-practice/conditioners/internal/streamUtils"
 )
 
 func getRequest() (int32, bool, error) {

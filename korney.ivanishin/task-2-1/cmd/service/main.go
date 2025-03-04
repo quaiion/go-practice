@@ -2,8 +2,8 @@ package main
 
 import (
         "fmt"
-        "github.com/conditioners/internal/streamUtils"
-        "github.com/conditioners/internal/process"
+        "github.com/quaiion/go-practice/conditioners/internal/streamUtils"
+        "github.com/quaiion/go-practice/conditioners/internal/process"
 )
 
 func main() {
