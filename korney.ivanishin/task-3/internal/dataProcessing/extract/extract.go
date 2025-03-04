@@ -120,10 +120,10 @@ func decodeXmlFile(decoder *xml.Decoder) (currency.CurrencyList, error) {
 }
 
 func translateValueStrToValue(curr currency.Currency) (currency.Currency, error) {
-        curr.ValueStr = strings.ReplaceAll(curr.ValueStr, `,`, `.`)
+        curr.Value = strings.ReplaceAll(curr.Value, `,`, `.`)
 
         var err error = nil
-        curr.Value, err = strconv.ParseFloat(curr.ValueStr, 64)
+        curr.FPValue, err = strconv.ParseFloat(curr.Value, 64)
         if err != nil {
                 return curr, fmt.Errorf("failed converting a 'Value' record to float // %w",
                                         err)
