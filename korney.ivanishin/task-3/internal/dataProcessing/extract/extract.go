@@ -23,11 +23,7 @@ func ExtractXmlData(inFilePath string) (currency.CurrencyList, error) {
         }
         defer inFile.Close()
 
-        decoder, err := createXmlDecoder(inFile)
-        if err != nil {
-                return nil, fmt.Errorf("failed creating xml decoder // %w",
-                                       err)
-        }
+        decoder := createXmlDecoder(inFile)
 
         data, err := decodeXmlFile(decoder)
         if err != nil {
@@ -53,16 +49,11 @@ func openInFile(inFilePath string) (*os.File, error) {
         return inFile, nil
 }
 
-func createXmlDecoder(inFile io.Reader) (*xml.Decoder, error) {
-        /** for now encoding is hardcoded based on the input files' format */
-        charsetReader, err := charset.NewReaderLabel(`windows-1251`, inFile)
-        if err != nil {
-                return nil, fmt.Errorf("failed creating a charset reader // %w",
-                                       err)
-        }
-
-        decoder := xml.NewDecoder(charsetReader)
-        return decoder, nil
+/** separate function for flexibility */
+func createXmlDecoder(inFile io.Reader) *xml.Decoder {
+        decoder := xml.NewDecoder(inFile)
+        decoder.CharsetReader = charset.NewReaderLabel
+        return decoder
 }
 
 func decodeXmlFile(decoder *xml.Decoder) (currency.CurrencyList, error) {
