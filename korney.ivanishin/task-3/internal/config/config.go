@@ -57,8 +57,8 @@ func parseConfFilePathFlag() (string, bool) {
 }
 
 type fileNamesParsed struct {
-        inFile  string `yaml:"input-file" validate:"required"`
-        outFile string `yaml:"output-file" validate:"required"`
+        InFile  string `yaml:"input-file" validate:"required"`
+        OutFile string `yaml:"output-file" validate:"required"`
 }
 
 func decodeConfFileData(confFileContents []byte) (string, string, error) {
@@ -84,5 +84,5 @@ func decodeConfFileData(confFileContents []byte) (string, string, error) {
                                           err)
         }
 
-        return parsed.inFile, parsed.outFile, nil
+        return parsed.InFile, parsed.OutFile, nil
 }
