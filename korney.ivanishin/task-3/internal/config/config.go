@@ -51,7 +51,7 @@ func readInFile(filePath string) ([]byte, error) {
 
 func parseConfFilePathFlag() (string, bool) {
         var pathStr string
-        flag.StringVar(&pathStr, "config", "config.yml", "config file path")
+        flag.StringVar(&pathStr, "config", "config/config.yml", "config file path")
         flag.Parse()
         return pathStr, flag.Parsed()
 }

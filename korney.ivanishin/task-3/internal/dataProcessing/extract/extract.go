@@ -65,6 +65,15 @@ func createXmlDecoder(inFile io.Reader) (*xml.Decoder, error) {
 }
 
 func decodeXmlFile(decoder *xml.Decoder) (currency.CurrencyList, error) {
+        if decoder == nil {
+                /** 
+                 * `panic` is used here as an assertion: it can be
+                 * triggered only by a critical memory fault or
+                 * because of a developer's mistake
+                 */
+                panic("failed decoding xml file data")
+        }
+
         var currList []currency.Currency
 
         for token, err := decoder.Token() ; token != nil ; token, err = decoder.Token() {
