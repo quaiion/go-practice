@@ -30,18 +30,18 @@ func main() {
         fmt.Print("please enter the operator ('+', '-', '*' or '/' sign): ")
         
         for {
-		var operator string
+                var operator string
                 _, err := fmt.Scan(&operator)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		
+                if err != nil {
+                        fmt.Println(err)
+                        break
+                }
+
                 var (
-			stop bool = true
-			result float64
-		)
-		
+                        stop bool = true
+                        result float64
+                )
+
                 switch operator {
                 case "+":
                         result = operand1 + operand2
@@ -68,7 +68,7 @@ func main() {
                 }
                 
                 if stop {
-			fmt.Printf("result: %.3f\n", result)
+                        fmt.Printf("result: %.3f\n", result)
                         break
                 }
         }
